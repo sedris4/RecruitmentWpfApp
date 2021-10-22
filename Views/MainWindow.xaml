@@ -1,0 +1,56 @@
+﻿<Window x:Class="RecruitmentWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="CSV Data loading app" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="5">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Report.State}" Value="Error">
+                                <Setter Property="Background" Value="#66FF0000"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Report.State}" Value="Success">
+                                <Setter Property="Background" Value="#66008000"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                
+                <TextBlock Text="{Binding Report.Message, FallbackValue=Test message}" Margin="5" VerticalAlignment="Center"/>
+            </Border>
+            
+            <Button x:Name="LoadFileButton" Content="Load" Click="LoadFileButton_Click" Margin="5" Grid.Column="1" Padding="20,0"/>
+        </Grid>
+
+        <Separator Margin="5" Grid.Row="1" />
+
+        <DataGrid x:Name="RecordsDataGrid" ItemsSource="{Binding Records}" Grid.Row="2" CanUserAddRows="False" 
+                  CanUserDeleteRows="False" CanUserResizeRows="False" AutoGenerateColumns="False" IsReadOnly="True"
+                  MouseDoubleClick="RecordsDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*"/>
+                <DataGridTextColumn Header="Surname" Binding="{Binding LastName}" Width="2*"/>
+                <DataGridTextColumn Header="E-Mail" Binding="{Binding Email}" Width="3*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding TelephoneNumber}" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
